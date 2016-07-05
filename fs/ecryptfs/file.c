@@ -112,11 +112,17 @@ out:
 static int ecryptfs_readdir(struct file *file, void *dirent, filldir_t filldir)
 {
 	int rc;
-	struct file *lower_file;
 	struct inode *inode;
 	struct ecryptfs_getdents_callback buf;
+	struct file *lower_file = ecryptfs_file_to_lower(file);
 
-	lower_file = ecryptfs_file_to_lower(file);
+	/*
+	 * Don't allow mmap on top of file systems that don't support it
+	 * natively.  If FILESYSTEM_MAX_STACK_DEPTH > 2 or ecryptfs
+	 * allows recursive mounting, this will need to be extended.
+	 */
+	if (!lower_file->f_op->mmap)
+		return -ENODEV;
 	lower_file->f_pos = file->f_pos;
 	inode = file->f_path.dentry->d_inode;
 	memset(&buf, 0, sizeof(buf));
