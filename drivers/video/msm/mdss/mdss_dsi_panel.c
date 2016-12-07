@@ -849,49 +849,49 @@ static struct dsi_cmd_desc partial_update_enable_cmd[] = {
 
 static int mdss_dsi_panel_partial_update(struct mdss_panel_data *pdata)
 {
-	struct mipi_panel_info *mipi;
-	struct mdss_dsi_ctrl_pdata *ctrl = NULL;
-	struct dcs_cmd_req cmdreq;
-	int rc = 0;
+    struct mipi_panel_info *mipi;
+    struct mdss_dsi_ctrl_pdata *ctrl = NULL;
+    struct dcs_cmd_req cmdreq;
+    int rc = 0;
 
-	if (pdata == NULL) {
-		pr_err("%s: Invalid input data\n", __func__);
-		return -EINVAL;
-	}
+    if (pdata == NULL) {
+        pr_err("%s: Invalid input data\n", __func__);
+        return -EINVAL;
+    }
 
-	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
-				panel_data);
-	mipi  = &pdata->panel_info.mipi;
+    ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
+                        panel_data);
+    mipi  = &pdata->panel_info.mipi;
 
-	pr_debug("%s: ctrl=%p ndx=%d\n", __func__, ctrl, ctrl->ndx);
+    pr_debug("%s: ctrl=%pK ndx=%d\n", __func__, ctrl, ctrl->ndx);
 
-	caset[1] = (((pdata->panel_info.roi_x) & 0xFF00) >> 8);
-	caset[2] = (((pdata->panel_info.roi_x) & 0xFF));
-	caset[3] = (((pdata->panel_info.roi_x - 1 + pdata->panel_info.roi_w)
-								& 0xFF00) >> 8);
-	caset[4] = (((pdata->panel_info.roi_x - 1 + pdata->panel_info.roi_w)
-								& 0xFF));
-	partial_update_enable_cmd[0].payload = caset;
+    caset[1] = (((pdata->panel_info.roi_x) & 0xFF00) >> 8);
+    caset[2] = (((pdata->panel_info.roi_x) & 0xFF));
+    caset[3] = (((pdata->panel_info.roi_x - 1 + pdata->panel_info.roi_w)
+                 & 0xFF00) >> 8);
+    caset[4] = (((pdata->panel_info.roi_x - 1 + pdata->panel_info.roi_w)
+                 & 0xFF));
+    partial_update_enable_cmd[0].payload = caset;
 
-	paset[1] = (((pdata->panel_info.roi_y) & 0xFF00) >> 8);
-	paset[2] = (((pdata->panel_info.roi_y) & 0xFF));
-	paset[3] = (((pdata->panel_info.roi_y - 1 + pdata->panel_info.roi_h)
-								& 0xFF00) >> 8);
-	paset[4] = (((pdata->panel_info.roi_y - 1 + pdata->panel_info.roi_h)
-								& 0xFF));
-	partial_update_enable_cmd[1].payload = paset;
+    paset[1] = (((pdata->panel_info.roi_y) & 0xFF00) >> 8);
+    paset[2] = (((pdata->panel_info.roi_y) & 0xFF));
+    paset[3] = (((pdata->panel_info.roi_y - 1 + pdata->panel_info.roi_h)
+                 & 0xFF00) >> 8);
+    paset[4] = (((pdata->panel_info.roi_y - 1 + pdata->panel_info.roi_h)
+                 & 0xFF));
+    partial_update_enable_cmd[1].payload = paset;
 
-	pr_debug("%s: enabling partial update\n", __func__);
-	memset(&cmdreq, 0, sizeof(cmdreq));
-	cmdreq.cmds = partial_update_enable_cmd;
-	cmdreq.cmds_cnt = 2;
-	cmdreq.flags = CMD_REQ_COMMIT | CMD_CLK_CTRL;
-	cmdreq.rlen = 0;
-	cmdreq.cb = NULL;
+    pr_debug("%s: enabling partial update\n", __func__);
+    memset(&cmdreq, 0, sizeof(cmdreq));
+    cmdreq.cmds = partial_update_enable_cmd;
+    cmdreq.cmds_cnt = 2;
+    cmdreq.flags = CMD_REQ_COMMIT | CMD_CLK_CTRL;
+    cmdreq.rlen = 0;
+    cmdreq.cb = NULL;
 
-	mdss_dsi_cmdlist_put(ctrl, &cmdreq);
+    mdss_dsi_cmdlist_put(ctrl, &cmdreq);
 
-	return rc;
+    return rc;
 }
 
 static void mdss_dsi_panel_switch_mode(struct mdss_panel_data *pdata,
@@ -997,7 +997,7 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 #ifdef VENDOR_EDIT
     pr_err("mdss_dsi_panel_on\n");
 #else
-	pr_debug("%s: ctrl=%p ndx=%d\n", __func__, ctrl, ctrl->ndx);
+    pr_debug("%s: ctrl=%pK ndx=%d\n", __func__, ctrl, ctrl->ndx);
 #endif
 #ifdef VENDOR_EDIT
 /* Onlinerd.driver, 2014/08/10  Add for print 14021 lcd enable pin */
@@ -1074,7 +1074,7 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 #ifdef VENDOR_EDIT
     pr_err("mdss_dsi_panel_off\n");
 #else
-	pr_debug("%s: ctrl=%p ndx=%d\n", __func__, ctrl, ctrl->ndx);
+    pr_debug("%s: ctrl=%pK ndx=%d\n", __func__, ctrl, ctrl->ndx);
 #endif
 #ifdef VENDOR_EDIT
 /* Mobile Phone Software Dept.Driver, 2014/02/25  Add for ESD test */
