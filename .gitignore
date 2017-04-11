@@ -99,3 +99,8 @@ x509.genkey
 
 # Kconfig presets
 all.config
+build_test.sh
+zipping/*
+compile.log
+product_info
+*.reactor.*
