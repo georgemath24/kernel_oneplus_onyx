@@ -54,7 +54,7 @@ else
 fi
 
 LINUX_COMPILE_BY="george"
-LINUX_COMPILE_HOST="Kangland"
+LINUX_COMPILE_HOST="Kangerland"
 
 UTS_VERSION="#$VERSION"
 CONFIG_FLAGS=""
